@@ -21,6 +21,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.0-rc1")
     implementation("io.github.microutils:kotlin-logging:2.1.0")
 
     implementation("org.springframework.kafka:spring-kafka")
