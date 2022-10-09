@@ -1,9 +1,10 @@
 package com.example.upbitcoineventproducer.trade
 
 import com.example.upbitcoineventproducer.logging.logger
+import com.example.upbitcoineventproducer.producer.KafkaProducer
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.function.Consumer
 
 @Configuration
 class UpbitCoinEventProducerConfig {
@@ -127,9 +128,11 @@ class UpbitCoinEventProducerConfig {
     }
 
     @Bean
-    fun upbitRealtimeTradeService(): UpbitRealtimeTradeService {
+    fun upbitRealtimeTradeService(kafkaProducer: KafkaProducer): UpbitRealtimeTradeService {
+        val objectMapper = jacksonObjectMapper()
+
         return UpbitRealtimeTradeService(MARKET, {
-            log.info("$it")
+            kafkaProducer.sendMessage(objectMapper.writeValueAsString(it))
         })
     }
 }
